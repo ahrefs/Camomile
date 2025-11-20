@@ -12,5 +12,3 @@ module type Type = sig
   (** Directory of compiled locale data *)
   val localedir : string
 end
-
-module Default : Type
