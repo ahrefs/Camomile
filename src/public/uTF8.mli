@@ -39,21 +39,19 @@ type t = string
 
 exception Malformed_code
 
-(** [validate s]
-    successes if s is valid UTF-8, otherwise raises Malformed_code.
-    Other functions assume strings are valid UTF-8, so it is prudent
-    to test their validity for strings from untrusted origins. *)
+(** [validate s] successes if s is valid UTF-8, otherwise raises Malformed_code.
+    Other functions assume strings are valid UTF-8, so it is prudent to test
+    their validity for strings from untrusted origins. *)
 val validate : t -> unit
 
 (* All functions below assume string are valid UTF-8.  If not,
  * the result is unspecified. *)
 
-(** [get s n] returns [n]-th Unicode character of [s].
-    The call requires O(n)-time. *)
+(** [get s n] returns [n]-th Unicode character of [s]. The call requires
+    O(n)-time. *)
 val get : t -> int -> UChar.t
 
-(** [init len f]
-    returns a new string which contains [len] Unicode characters.
+(** [init len f] returns a new string which contains [len] Unicode characters.
     The i-th Unicode character is initialized by [f i] *)
 val init : int -> (int -> UChar.t) -> t
 
@@ -64,8 +62,8 @@ val length : t -> int
     The location of the first character is [0] *)
 type index = int
 
-(** [nth s n] returns the position of the [n]-th Unicode character.
-    The call requires O(n)-time *)
+(** [nth s n] returns the position of the [n]-th Unicode character. The call
+    requires O(n)-time *)
 val nth : t -> int -> index
 
 (** The position of the head of the first Unicode character. *)
@@ -74,55 +72,44 @@ val first : t -> index
 (** The position of the head of the last Unicode character. *)
 val last : t -> index
 
-(** [look s i]
-    returns the Unicode character of the location [i] in the string [s]. *)
+(** [look s i] returns the Unicode character of the location [i] in the string
+    [s]. *)
 val look : t -> index -> UChar.t
 
-(** [out_of_range s i]
-    tests whether [i] is a position inside of [s]. *)
+(** [out_of_range s i] tests whether [i] is a position inside of [s]. *)
 val out_of_range : t -> index -> bool
 
-(** [compare_index s i1 i2] returns
-    a value < 0 if [i1] is the position located before [i2],
-    0 if [i1] and [i2] points the same location,
-    a value > 0 if [i1] is the position located after [i2]. *)
+(** [compare_index s i1 i2] returns a value < 0 if [i1] is the position located
+    before [i2], 0 if [i1] and [i2] points the same location, a value > 0 if
+    [i1] is the position located after [i2]. *)
 val compare_index : t -> index -> index -> int
 
-(** [next s i]
-    returns the position of the head of the Unicode character
-    located immediately after [i].
-    If [i] is inside of [s], the function always successes.
-    If [i] is inside of [s] and there is no Unicode character after [i],
-    the position outside [s] is returned.
-    If [i] is not inside of [s], the behaviour is unspecified. *)
+(** [next s i] returns the position of the head of the Unicode character located
+    immediately after [i]. If [i] is inside of [s], the function always
+    successes. If [i] is inside of [s] and there is no Unicode character after
+    [i], the position outside [s] is returned. If [i] is not inside of [s], the
+    behaviour is unspecified. *)
 val next : t -> index -> index
 
-(** [prev s i]
-    returns the position of the head of the Unicode character
-    located immediately before [i].
-    If [i] is inside of [s], the function always successes.
-    If [i] is inside of [s] and there is no Unicode character before [i],
-    the position outside [s] is returned.
-    If [i] is not inside of [s], the behaviour is unspecified. *)
+(** [prev s i] returns the position of the head of the Unicode character located
+    immediately before [i]. If [i] is inside of [s], the function always
+    successes. If [i] is inside of [s] and there is no Unicode character before
+    [i], the position outside [s] is returned. If [i] is not inside of [s], the
+    behaviour is unspecified. *)
 val prev : t -> index -> index
 
-(** [move s i n]
-    returns [n]-th Unicode character after [i] if n >= 0,
-    [n]-th Unicode character before [i] if n < 0.
-    If there is no such character, the result is unspecified. *)
+(** [move s i n] returns [n]-th Unicode character after [i] if n >= 0, [n]-th
+    Unicode character before [i] if n < 0. If there is no such character, the
+    result is unspecified. *)
 val move : t -> index -> int -> index
 
-(** [iter f s]
-    applies [f] to all Unicode characters in [s].
-    The order of application is same to the order
-    of the Unicode characters in [s]. *)
+(** [iter f s] applies [f] to all Unicode characters in [s]. The order of
+    application is same to the order of the Unicode characters in [s]. *)
 val iter : (UChar.t -> unit) -> t -> unit
 
-(** Code point comparison by the lexicographic order.
-    [compare s1 s2] returns
-    a positive integer if [s1] > [s2],
-    0 if [s1] = [s2],
-    a negative integer if [s1] < [s2]. *)
+(** Code point comparison by the lexicographic order. [compare s1 s2] returns a
+    positive integer if [s1] > [s2], 0 if [s1] = [s2], a negative integer if
+    [s1] < [s2]. *)
 val compare : t -> t -> int
 
 (** Buffer module for UTF-8 strings *)
@@ -138,8 +125,8 @@ module Buf : sig
   (** [contents buf] returns the contents of the buffer. *)
   val contents : buf -> t
 
-  (** Empty the buffer,
-      but retains the internal storage which was holding the contents *)
+  (** Empty the buffer, but retains the internal storage which was holding the
+      contents *)
   val clear : buf -> unit
 
   (** Empty the buffer and de-allocate the internal storage. *)
@@ -151,8 +138,8 @@ module Buf : sig
   (** Add the UTF-8 string to the buffer. *)
   val add_string : buf -> t -> unit
 
-  (** [add_buffer b1 b2] adds the contents of [b2] to [b1].
-      The contents of [b2] is not changed. *)
+  (** [add_buffer b1 b2] adds the contents of [b2] to [b1]. The contents of [b2]
+      is not changed. *)
   val add_buffer : buf -> buf -> unit
 end
 with type buf = Buffer.t

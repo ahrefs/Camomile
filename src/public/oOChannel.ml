@@ -33,18 +33,16 @@
 (* You can contact the authour by sending email to *)
 (* yoriyuki.y@gmail.com *)
 
-class type ['a] obj_input_channel =
-  object
-    method get : unit -> 'a
-    method close_in : unit -> unit
-  end
+class type ['a] obj_input_channel = object
+  method get : unit -> 'a
+  method close_in : unit -> unit
+end
 
-class type ['a] obj_output_channel =
-  object
-    method put : 'a -> unit
-    method flush : unit -> unit
-    method close_out : unit -> unit
-  end
+class type ['a] obj_output_channel = object
+  method put : 'a -> unit
+  method flush : unit -> unit
+  method close_out : unit -> unit
+end
 
 class ['a] channel_of_stream s =
   object
@@ -59,18 +57,16 @@ class ['a] channel_of_stream s =
 let stream_of_channel inchan =
   Stream.from (fun _ -> try Some (inchan#get ()) with End_of_file -> None)
 
-class type char_input_channel =
-  object
-    method input : Bytes.t -> int -> int -> int
-    method close_in : unit -> unit
-  end
+class type char_input_channel = object
+  method input : Bytes.t -> int -> int -> int
+  method close_in : unit -> unit
+end
 
-class type char_output_channel =
-  object
-    method output : Bytes.t -> int -> int -> int
-    method flush : unit -> unit
-    method close_out : unit -> unit
-  end
+class type char_output_channel = object
+  method output : Bytes.t -> int -> int -> int
+  method flush : unit -> unit
+  method close_out : unit -> unit
+end
 
 class char_input_channel_of (oc : char #obj_input_channel) =
   object

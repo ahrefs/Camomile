@@ -34,8 +34,7 @@
 
 (** Case mappings as defined in Unicode Technical Report #21 *)
 
-(** For locale, see {!Locale}.
-    If locale is omitted, default mapping is used. *)
+(** For locale, see {!Locale}. If locale is omitted, default mapping is used. *)
 
 module type Type = sig
   type text

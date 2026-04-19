@@ -50,10 +50,9 @@ let rec prep s =
     | Some u ->
         Stream.junk s;
         let c = try Some (UChar.char_of u) with _ -> None in
-        begin
-          match Info.general_category u with
-            | (`Cc | `Cf) when c <> Some '\n' -> prep s
-            | ct -> Stream.icons (c, ct, u) (Stream.slazy (fun () -> prep s))
+        begin match Info.general_category u with
+          | (`Cc | `Cf) when c <> Some '\n' -> prep s
+          | ct -> Stream.icons (c, ct, u) (Stream.slazy (fun () -> prep s))
         end
 
 let rec remove_comment s =

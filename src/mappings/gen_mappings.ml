@@ -140,14 +140,11 @@ let charmap cjk c =
                       (*jisx0201_kana or jisx0208*)
                       let enc1 = Char.code enc.[0] in
                       let enc2 = Char.code enc.[1] in
-                      begin
-                        match enc1 with
-                          | 0x8e -> Unimap.add jisx0201 enc2 u
-                          | _ ->
-                              let jis =
-                                ((enc1 - 0x80) lsl 8) lor (enc2 - 0x80)
-                              in
-                              Unimap.add jisx0208 jis u
+                      begin match enc1 with
+                        | 0x8e -> Unimap.add jisx0201 enc2 u
+                        | _ ->
+                            let jis = ((enc1 - 0x80) lsl 8) lor (enc2 - 0x80) in
+                            Unimap.add jisx0208 jis u
                       end
                   | 3 ->
                       (*jisx0212*)

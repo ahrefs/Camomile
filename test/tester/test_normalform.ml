@@ -51,7 +51,7 @@ let print_text t =
   UText.iter (fun u -> Buffer.add_string buf (print_char u)) t;
   Buffer.contents buf
 
-module NF = UNF.Make ((UText : UnicodeString.Type with type t = UText.t))
+module NF = UNF.Make (UText : UnicodeString.Type with type t = UText.t)
 
 let _ =
   read_file (input_filename testfile) (fun c ->

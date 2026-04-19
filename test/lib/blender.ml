@@ -183,7 +183,8 @@ let expect_equal_app ?msg ?printer f x g y =
                   (sprintf
                      "expected %s\n\
                      \          but got no exception\n\
-                     \    in test %s" exn1 test_msg)
+                     \    in test %s"
+                     exn1 test_msg)
             | Some p ->
                 fail
                   (sprintf "expected %s\n          but got %s\n    in test %s"

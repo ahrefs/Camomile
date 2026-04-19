@@ -1,5 +1,5 @@
-(** Sub-texts, parts of original (ur-) texts.
-    The signature and semantics matches those of UStorage. *)
+(** Sub-texts, parts of original (ur-) texts. The signature and semantics
+    matches those of UStorage. *)
 (* Copyright (C) 2002, 2003 Yamagata Yoriyuki. distributed with LGPL *)
 
 (* This library is free software; you can redistribute it and/or *)

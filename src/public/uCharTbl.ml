@@ -1,4 +1,4 @@
-(** Fast lookup tables for Unicode.  Accessible by constant time. *)
+(** Fast lookup tables for Unicode. Accessible by constant time. *)
 (* Copyright (C) 2002, 2003 Yamagata Yoriyuki. distributed with LGPL *)
 
 (* This library is free software; you can redistribute it and/or *)

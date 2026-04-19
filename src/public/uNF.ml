@@ -65,9 +65,9 @@ module type Type = sig
 
   val nfc_append : text -> text -> text
 
-  (** [put_nfd b t], [put_nfkd b t], [put_nfc b t], [put_nfkc b t]
-      clear the contents of [b] and put the NFD, NFKD, NFC, NFKC
-      forms of [t] into [b] respectively. *)
+  (** [put_nfd b t], [put_nfkd b t], [put_nfc b t], [put_nfkc b t] clear the
+      contents of [b] and put the NFD, NFKD, NFC, NFKC forms of [t] into [b]
+      respectively. *)
 
   val put_nfd : XString.t -> text -> unit
   val put_nfkd : XString.t -> text -> unit
@@ -217,7 +217,7 @@ module Make (Config : Config.Type) (Text : UnicodeString.Type) = struct
       let b =
         if j = i || c' <> c then (
           (*not blocked!*)
-          match look_composition u (composition (XString.get x' k)) with
+            match look_composition u (composition (XString.get x' k)) with
             | None -> true
             | Some u' ->
                 XString.set x' k u';

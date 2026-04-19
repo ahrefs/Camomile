@@ -339,7 +339,7 @@ let _ =
               n n'
           done))
 
-module UTextTest = UStorageTest.Make ((UText : UnicodeString.Type))
+module UTextTest = UStorageTest.Make (UText : UnicodeString.Type)
 
 let _ = UTextTest.test ~desc:"UText test" ~log:"base_utext" ()
 
@@ -508,7 +508,7 @@ let _ =
 
 (* Tests for XString *)
 
-module XStringTest = UStorageTest.Make ((XString : UnicodeString.Type))
+module XStringTest = UStorageTest.Make (XString : UnicodeString.Type)
 
 let _ = XStringTest.test ~desc:"XString" ~log:"base_xstring" ()
 

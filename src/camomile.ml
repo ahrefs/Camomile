@@ -26,7 +26,5 @@ module Config = struct
 end
 
 module DefaultConfig = Config.Default
-
 include Functor
-
 include Make (Config.Default)

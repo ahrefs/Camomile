@@ -1,4 +1,3 @@
-
 module type Type = sig
   module OOChannel : module type of OOChannel
   module USet : module type of USet
@@ -31,12 +30,10 @@ module type Type = sig
     type variable_option =
       [ `Blanked | `Non_ignorable | `Shifted | `Shift_Trimmed ]
 
-    (** Strength of comparison.  For European languages, each strength
-        roughly means as
-        `Primary : Ignore accents and case
-        `Secondary : Ignore case but accents are counted in.
-        `Tertiary : Accents and case are counted in.
-        For the case of `Shifted, `Shift_Trimmed, there is the fourth strength.
+    (** Strength of comparison. For European languages, each strength roughly
+        means as `Primary : Ignore accents and case `Secondary : Ignore case but
+        accents are counted in. `Tertiary : Accents and case are counted in. For
+        the case of `Shifted, `Shift_Trimmed, there is the fourth strength.
         `Quaternary : Variables such as - (hyphen) are counted in. *)
     type precision = [ `Primary | `Secondary | `Tertiary | `Quaternary ]
 

@@ -1,4 +1,4 @@
-(** Fast lookup tables for Unicode.  Accessible by constant time. *)
+(** Fast lookup tables for Unicode. Accessible by constant time. *)
 (* Copyright (C) 2002, 2003 Yamagata Yoriyuki. distributed with LGPL *)
 
 (* This library is free software; you can redistribute it and/or *)
@@ -33,7 +33,7 @@
 (* You can contact the authour by sending email to *)
 (* yoriyuki.y@gmail.com *)
 
-(** Fast lookup tables.  Accessible by constant time. *)
+(** Fast lookup tables. Accessible by constant time. *)
 type 'a tbl
 
 type 'a t = 'a tbl
@@ -46,8 +46,8 @@ module type Type = sig
 
   val get : elt tbl -> UChar.t -> elt
 
-  (** [of_map def m] creates the table which has the same value to [m].
-      The table returns [def] for the characters for which [m] is undefined. *)
+  (** [of_map def m] creates the table which has the same value to [m]. The
+      table returns [def] for the characters for which [m] is undefined. *)
   val of_map : elt -> elt UMap.t -> t
 end
 
@@ -70,8 +70,8 @@ module Bits : sig
   val get : t -> UChar.t -> int
 end
 
-(** Tables for integers.  If integers are not span the whole 31-bit or
-    63-bit values, [Bytes.t] is more space efficient than [int tbl]. *)
+(** Tables for integers. If integers are not span the whole 31-bit or 63-bit
+    values, [Bytes.t] is more space efficient than [int tbl]. *)
 module Bytes : sig
   type t
 

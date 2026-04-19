@@ -45,31 +45,28 @@ module type Interface = sig
   (** Type for encodings. *)
   type t
 
-  (** [automatic name [enc_1; enc_2; ... enc_n] enc]
-      creates the new encoding [name]
-      doing automatic encoding detection among [enc_1], [enc_2], ..., [enc_n]
-      by the given order.   [enc] is used for encoding. *)
+  (** [automatic name [enc_1; enc_2; ... enc_n] enc] creates the new encoding
+      [name] doing automatic encoding detection among [enc_1], [enc_2], ...,
+      [enc_n] by the given order. [enc] is used for encoding. *)
   val automatic : string -> t list -> t -> t
 
-  (** [new_enc name enc] registers the new encoding [enc]
-      under the name [name] *)
+  (** [new_enc name enc] registers the new encoding [enc] under the name [name]
+  *)
   val new_enc : string -> t -> unit
 
-  (** [alias alias name] : Define [alias] as an alias of
-      the encoding with the name [name]. *)
+  (** [alias alias name] : Define [alias] as an alias of the encoding with the
+      name [name]. *)
   val alias : string -> string -> unit
 
-  (** Returns the encoding of the given name.
-      Fails if the encoding is unknown.
-      Encoding names are the same to codeset names in charmap files for
-      the encodings defined by charmap.
-      See charmaps directory in the source directory for the available encodings.
-      In addition to the encodings via the charmap files, camomile supports
-      ISO-2022-CN, ISO-2022-JP, ISO-2022-JP-2, ISO-2022-KR, jauto (Auto
-      detection of Japanese encodings), UTF-8, UTF-16, UTF-16BE, UTF-16LE.
-      UTF-32, UTF-32BE, UTF-32LE, UCS-4(Big endian order).
-      The encoding also can be referred by "IANA/<IANA name>", if the encoding
-      is supported. *)
+  (** Returns the encoding of the given name. Fails if the encoding is unknown.
+      Encoding names are the same to codeset names in charmap files for the
+      encodings defined by charmap. See charmaps directory in the source
+      directory for the available encodings. In addition to the encodings via
+      the charmap files, camomile supports ISO-2022-CN, ISO-2022-JP,
+      ISO-2022-JP-2, ISO-2022-KR, jauto (Auto detection of Japanese encodings),
+      UTF-8, UTF-16, UTF-16BE, UTF-16LE. UTF-32, UTF-32BE, UTF-32LE, UCS-4(Big
+      endian order). The encoding also can be referred by "IANA/<IANA name>", if
+      the encoding is supported. *)
   val of_name : string -> t
 
   (** Returns the name of the encoding. *)
@@ -88,73 +85,82 @@ module type Interface = sig
   val utf32le : t
   val ucs4 : t
 
-  (** [recode_string ~in_enc ~out_enc s]
-      converts the string [s] from [in_enc] to [out_enc]. *)
+  (** [recode_string ~in_enc ~out_enc s] converts the string [s] from [in_enc]
+      to [out_enc]. *)
   val recode_string : in_enc:t -> out_enc:t -> string -> string
 
-  (** [new uchar_input_channel_of enc c_in] creates the new intput
-      channel which convert characters to Unicode using encoding
-      [enc]. *)
+  (** [new uchar_input_channel_of enc c_in] creates the new intput channel which
+      convert characters to Unicode using encoding [enc]. *)
   class uchar_input_channel_of :
-    t -> char_input_channel -> [UChar.t] obj_input_channel
+    t ->
+    char_input_channel ->
+    [UChar.t] obj_input_channel
 
-  (** [new uchar_ouput_channel_of enc c_out] creates the new output
-      channel which convert Unicode to its byte representation using
-      encoding [enc]. *)
+  (** [new uchar_ouput_channel_of enc c_out] creates the new output channel
+      which convert Unicode to its byte representation using encoding [enc]. *)
   class uchar_output_channel_of :
-    t -> char_output_channel -> [UChar.t] obj_output_channel
+    t ->
+    char_output_channel ->
+    [UChar.t] obj_output_channel
 
-  (** [new convert_uchar_input enc c_in] creates the new channel which
-      convert Unicode input to its byte representation using encoding
-      [enc]. *)
+  (** [new convert_uchar_input enc c_in] creates the new channel which convert
+      Unicode input to its byte representation using encoding [enc]. *)
   class convert_uchar_input :
-    t -> UChar.t obj_input_channel -> char_input_channel
+    t ->
+    UChar.t obj_input_channel ->
+    char_input_channel
 
-  (** [new convert_uchar_output enc c_in] creates the new channel which
-      convert character output to Unicode using encoding [enc]. *)
+  (** [new convert_uchar_output enc c_in] creates the new channel which convert
+      character output to Unicode using encoding [enc]. *)
   class convert_uchar_output :
-    t -> UChar.t obj_output_channel -> char_output_channel
+    t ->
+    UChar.t obj_output_channel ->
+    char_output_channel
 
-  (** [new convert_input in_enc out_enc c_in] create the new input
-      channel using encoding [out_enc] from the input channel using
-      encoding [in_enc] *)
+  (** [new convert_input in_enc out_enc c_in] create the new input channel using
+      encoding [out_enc] from the input channel using encoding [in_enc] *)
   class convert_input :
-    in_enc:t -> out_enc:t -> char_input_channel -> char_input_channel
+    in_enc:t ->
+    out_enc:t ->
+    char_input_channel ->
+    char_input_channel
 
-  (** [new convert_ouput in_enc out_enc c_in] create the new output
-      channel using encoding [in_enc] from the output channel using
-      encoding [out_enc] *)
+  (** [new convert_ouput in_enc out_enc c_in] create the new output channel
+      using encoding [in_enc] from the output channel using encoding [out_enc]
+  *)
   class convert_output :
-    in_enc:t -> out_enc:t -> char_output_channel -> char_output_channel
+    in_enc:t ->
+    out_enc:t ->
+    char_output_channel ->
+    char_output_channel
 
   (** [new out_channel enc outchan] creates the output channel object
-      {!OOChannel.obj_output_channel} which
-      receives Unicode characters and outputs them to [outchan] using
-      the encoding [enc]. *)
+      {!OOChannel.obj_output_channel} which receives Unicode characters and
+      outputs them to [outchan] using the encoding [enc]. *)
   class out_channel : t -> Stdlib.out_channel -> [UChar.t] obj_output_channel
 
   (** [new in_channel enc inchan] creates the intput channel object
-      {!OOChannel.obj_input_channel} which
-      reads bytes from [inchan] and converts them to Unicode characters. *)
+      {!OOChannel.obj_input_channel} which reads bytes from [inchan] and
+      converts them to Unicode characters. *)
   class in_channel : t -> Stdlib.in_channel -> [UChar.t] obj_input_channel
 
-  (** [ustream_of enc chars] converts the byte stream [chars]
-      to the Unicode character stream by the encoding [enc]. *)
+  (** [ustream_of enc chars] converts the byte stream [chars] to the Unicode
+      character stream by the encoding [enc]. *)
   val ustream_of : t -> char Stream.t -> UChar.t Stream.t
 
-  (** [char_stream_of enc uchars] converts the Unicode character stream
-      [uchars] to the byte stream by the encoding [enc] *)
+  (** [char_stream_of enc uchars] converts the Unicode character stream [uchars]
+      to the byte stream by the encoding [enc] *)
   val char_stream_of : t -> UChar.t Stream.t -> char Stream.t
 
   module type Type = sig
     type text
 
-    (** [decode enc s] converts the string [s] encoded
-        by the encoding [enc] to the Unicode text. *)
+    (** [decode enc s] converts the string [s] encoded by the encoding [enc] to
+        the Unicode text. *)
     val decode : t -> string -> text
 
-    (** [encode enc t] converts the Unicode text [t] to the string
-        by the encoding [enc].*)
+    (** [encode enc t] converts the Unicode text [t] to the string by the
+        encoding [enc].*)
     val encode : t -> text -> string
   end
 
@@ -407,13 +413,12 @@ module Configure (Config : Config.Type) = struct
       (new char_input_channel_of (new channel_of_stream s))
 
   let fill_string s pos q =
-    begin
-      try
-        while !pos < Bytes.length s do
-          Bytes.set s !pos (Queue.take q);
-          incr pos
-        done
-      with Queue.Empty -> ()
+    begin try
+      while !pos < Bytes.length s do
+        Bytes.set s !pos (Queue.take q);
+        incr pos
+      done
+    with Queue.Empty -> ()
     end;
     let read c =
       if !pos < Bytes.length s then begin
@@ -784,8 +789,9 @@ module Configure (Config : Config.Type) = struct
             end)
           else raise Malformed_code
         else if i = 0xfeff then ()
-        else if (*BOM is ignored*)
-                i <= 0xd7ff || (i >= 0xe000 && i <= 0xfffd)
+        else if
+          (*BOM is ignored*)
+          i <= 0xd7ff || (i >= 0xe000 && i <= 0xfffd)
         then output (UChar.chr_of_uint i)
         else if i >= 0xd800 && i <= 0xdbff then begin
           state.surrogated <- true;
@@ -920,8 +926,10 @@ module Configure (Config : Config.Type) = struct
     let make_utf32_decoder m =
       let read n =
         if n = 0xfeff then ()
-        else if (*BOM is ignored*)
-                n > 0x10ffff || n < 0 || n = 0xfffe then raise Malformed_code
+        else if
+          (*BOM is ignored*)
+          n > 0x10ffff || n < 0 || n = 0xfffe
+        then raise Malformed_code
         else m.read (UChar.chr_of_uint n)
       in
       let term () = m.term () in
@@ -1244,7 +1252,7 @@ module Configure (Config : Config.Type) = struct
             (*set96*)
             (* since RFC allows G2 is cleared in the begining of lines,
                	     * we set G2 every times. *)
-            match cs with
+              match cs with
               | Iso88591 ->
                   m.read esc;
                   m.read '.';

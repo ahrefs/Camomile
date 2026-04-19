@@ -40,7 +40,7 @@ let print_text t =
 let sgn_of i =
   if i < 0 then -1 else if i = 0 then 0 else if i > 0 then 1 else assert false
 
-module Ucomp = UCol.Make ((UText : UnicodeString.Type with type t = UText.t))
+module Ucomp = UCol.Make (UText : UnicodeString.Type with type t = UText.t)
 
 let uca ~desc variable c =
   let prev = ref (UText.init 0 (fun _ -> uchar_of_int 0)) in

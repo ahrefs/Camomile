@@ -143,34 +143,33 @@ module MakeNode (Sub : NodeType) = struct
 
   let of_map n0 def m =
     let a = make_raw def in
-    begin
-      if IMap.is_empty m then ()
-      else (
-        let l = AvlTree.left_branch m in
-        let r = AvlTree.right_branch m in
-        if IMap.is_empty l && IMap.is_empty r then (
-          let k1, k2, v = AvlTree.root m in
-          let i1 = (k1 - n0) lsr (8 * level) in
-          let n1 = n0 lor (i1 lsl (8 * level)) in
+    begin if IMap.is_empty m then ()
+    else (
+      let l = AvlTree.left_branch m in
+      let r = AvlTree.right_branch m in
+      if IMap.is_empty l && IMap.is_empty r then (
+        let k1, k2, v = AvlTree.root m in
+        let i1 = (k1 - n0) lsr (8 * level) in
+        let n1 = n0 lor (i1 lsl (8 * level)) in
+        let n2 = n1 lor ((1 lsl (8 * level)) - 1) in
+        a.(i1) <- Sub.of_map n1 def (IMap.until n2 (IMap.from n1 m));
+        let i2 = (k2 - n0) lsr (8 * level) in
+        if i1 <> i2 then (
+          let n1 = n0 lor (i2 lsl (8 * level)) in
           let n2 = n1 lor ((1 lsl (8 * level)) - 1) in
-          a.(i1) <- Sub.of_map n1 def (IMap.until n2 (IMap.from n1 m));
-          let i2 = (k2 - n0) lsr (8 * level) in
-          if i1 <> i2 then (
-            let n1 = n0 lor (i2 lsl (8 * level)) in
-            let n2 = n1 lor ((1 lsl (8 * level)) - 1) in
-            a.(i2) <- Sub.of_map n1 def (IMap.until n2 (IMap.from n1 m));
-            let b = Sub.make v in
-            for i = i1 + 1 to i2 - 1 do
-              a.(i) <- b
-            done)
-          else ())
-        else
-          for i = 0 to if level = 3 then 127 else 255 do
-            let n1 = n0 lor (i lsl (8 * level)) in
-            let n2 = n1 lor ((1 lsl (8 * level)) - 1) in
-            let m' = IMap.until n2 (IMap.from n1 m) in
-            if IMap.is_empty m' then () else a.(i) <- Sub.of_map n1 def m'
+          a.(i2) <- Sub.of_map n1 def (IMap.until n2 (IMap.from n1 m));
+          let b = Sub.make v in
+          for i = i1 + 1 to i2 - 1 do
+            a.(i) <- b
           done)
+        else ())
+      else
+        for i = 0 to if level = 3 then 127 else 255 do
+          let n1 = n0 lor (i lsl (8 * level)) in
+          let n2 = n1 lor ((1 lsl (8 * level)) - 1) in
+          let m' = IMap.until n2 (IMap.from n1 m) in
+          if IMap.is_empty m' then () else a.(i) <- Sub.of_map n1 def m'
+        done)
     end;
     hashcons a
 

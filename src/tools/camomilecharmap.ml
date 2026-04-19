@@ -217,7 +217,9 @@ let main () =
     let rec scan i =
       let s = Tbl31.get ucs_to_enc i in
       (*    Printf.eprintf "%d - %s\n" i (String.escaped s); *)
-      match s with "" -> i | _ -> if i > 255 then 0xffff else scan (i + 1)
+        match s with
+        | "" -> i
+        | _ -> if i > 255 then 0xffff else scan (i + 1)
     in
     scan 0
   in

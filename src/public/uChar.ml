@@ -1,8 +1,7 @@
 (** Unicode (ISO-UCS) characters.
 
-    This module implements Unicode (actually ISO-UCS) characters.  All
-    31-bit code points are allowed.
-*)
+    This module implements Unicode (actually ISO-UCS) characters. All 31-bit
+    code points are allowed. *)
 
 (* Copyright (C) 2002, 2003, 2004 Yamagata Yoriyuki. *)
 

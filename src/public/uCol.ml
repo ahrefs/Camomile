@@ -41,12 +41,10 @@ module type Type = sig
   type text
   type index
 
-  (** For locale, see {!Locale}.
-      If [locale] is omitted, the standard UCA order is used.
-      If [prec] is omitted, the maximum possible strength is used.
-      If [variable] is omitted, the default of the locale
-      (usually [`Shifted]) is used.
-      The meaning of the returned value is similar to Stdlib.compare *)
+  (** For locale, see {!Locale}. If [locale] is omitted, the standard UCA order
+      is used. If [prec] is omitted, the maximum possible strength is used. If
+      [variable] is omitted, the default of the locale (usually [`Shifted]) is
+      used. The meaning of the returned value is similar to Stdlib.compare *)
   val compare :
     ?locale:string ->
     ?prec:precision ->
@@ -55,11 +53,10 @@ module type Type = sig
     text ->
     int
 
-  (** Binary comparison of sort_key gives the same result as [compare].
-      i.e.
-      [compare t1 t2 = Stdlib.compare (sort_key t1) (sort_key t2)]
-      If the same texts are repeatedly compared,
-      pre-computation of sort_key gives better performance. *)
+  (** Binary comparison of sort_key gives the same result as [compare]. i.e.
+      [compare t1 t2 = Stdlib.compare (sort_key t1) (sort_key t2)] If the same
+      texts are repeatedly compared, pre-computation of sort_key gives better
+      performance. *)
   val sort_key :
     ?locale:string ->
     ?prec:precision ->
@@ -464,7 +461,7 @@ module Make (Config : Config.Type) (Text : UnicodeString.Type) = struct
 
   let addce keybuf ce =
     (*  Printf.printf "addce ce: %x " ce; *)
-    match keybuf with
+      match keybuf with
       | Non_ignorable keybuf -> addce_non_ignorable keybuf ce
       | Blanked keybuf -> addce_blanked keybuf ce
       | Shifted keybuf | Shift_Trimmed keybuf -> addce_shifted keybuf ce
@@ -647,7 +644,7 @@ module Make (Config : Config.Type) (Text : UnicodeString.Type) = struct
     if
       n < 0 || n > 0x10ffff
       ||
-      match UCharInfo.general_category u with
+        match UCharInfo.general_category u with
         | `Cs -> true
         | _ -> false || is_noncharacter_code_point u
     then [Unidata.complete_ignorable] (*illegal code point*)
@@ -737,7 +734,7 @@ module Make (Config : Config.Type) (Text : UnicodeString.Type) = struct
             | _ -> `Inc (a, i, lazy (loop i f [] [] [])))
       | u :: rest -> (
           (*	    Printf.printf "prep uchar %x " (UChar.code u); *)
-          match Unidata.ce col_info.Unidata.tbl u with
+            match Unidata.ce col_info.Unidata.tbl u with
             | [([], [ce])] when ce = Unidata.complete_ignorable ->
                 (*		Printf.printf "discarded "; *)
                 loop i f prev a rest

@@ -132,9 +132,9 @@ module type Type = sig
   class input_line : UChar.t #obj_input_channel -> [text] obj_input_channel
 
   class output_line :
-    ?sp:[ `CR | `CRLF | `LF | `LS | `NEL | `PS ]
-    -> UChar.t #obj_output_channel
-    -> [text] obj_output_channel
+    ?sp:[ `CR | `CRLF | `LF | `LS | `NEL | `PS ] ->
+    UChar.t #obj_output_channel ->
+    [text] obj_output_channel
 end
 
 module Make (Text : UnicodeString.Type) = struct

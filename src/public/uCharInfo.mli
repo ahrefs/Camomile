@@ -37,8 +37,7 @@
 module type Type = sig
   (** Character Information *)
 
-  (** Type of Unicode general character categories.
-      Each variant specifies
+  (** Type of Unicode general character categories. Each variant specifies
       - [`Lu] : Letter, Uppercase
       - [`Ll] : Letter, Lowercase
       - [`Lt] : Letter, Titlecase
@@ -68,7 +67,7 @@ module type Type = sig
       - [`Sm] : Symbol, Math
       - [`Sc] : Symbol, Currency
       - [`Sk] : Symbol, Modifier
-      - [`So] : Symbol, Other  *)
+      - [`So] : Symbol, Other *)
   type general_category_type =
     [ `Lu  (** Letter, Uppercase *)
     | `Ll  (** Letter, Lowercase *)
@@ -93,8 +92,8 @@ module type Type = sig
     | `Pd  (** Punctuation, Dash *)
     | `Ps  (** Punctuation, Open *)
     | `Pe  (** Punctuation, Close *)
-    | `Pi  (** Punctuation, Initial quote  *)
-    | `Pf  (** Punctuation, Final quote  *)
+    | `Pi  (** Punctuation, Initial quote *)
+    | `Pf  (** Punctuation, Final quote *)
     | `Po  (** Punctuation, Other *)
     | `Sm  (** Symbol, Math *)
     | `Sc  (** Symbol, Currency *)
@@ -146,17 +145,16 @@ module type Type = sig
   (** Load the table for the given character type. *)
   val load_property_tbl : character_property_type -> UCharTbl.Bool.t
 
-  (** Load the table for the given name of the character type.
-      The name can be obtained by removing ` from its name of
-      the polymorphic variant tag. *)
+  (** Load the table for the given name of the character type. The name can be
+      obtained by removing ` from its name of the polymorphic variant tag. *)
   val load_property_tbl_by_name : string -> UCharTbl.Bool.t
 
   (** Load the set of characters of the given character type. *)
   val load_property_set : character_property_type -> USet.t
 
-  (** Load the set of characters of the given name of the character type.
-      The name can be obtained by removing ` from its name of
-      the polymorphic variant tag. *)
+  (** Load the set of characters of the given name of the character type. The
+      name can be obtained by removing ` from its name of the polymorphic
+      variant tag. *)
   val load_property_set_by_name : string -> USet.t
 
   (** Type for script type *)
@@ -224,8 +222,8 @@ module type Type = sig
   (** [age c] unicode version in wich [c] was introduced *)
   val age : UChar.t -> version_type
 
-  (** [older v1 v2] is [true] if [v1] is older ( or the same version )
-      than [v2]. Everithing is older than [`Nc] *)
+  (** [older v1 v2] is [true] if [v1] is older ( or the same version ) than
+      [v2]. Everithing is older than [`Nc] *)
   val older : version_type -> version_type -> bool
 
   (** casing *)
@@ -254,9 +252,8 @@ module type Type = sig
 
   val load_casefolding_tbl : unit -> UChar.t list UCharTbl.t
 
-  (** Combined class
-      A combined class is an integer of 0 -- 255, showing how this character
-      interacts to other combined characters.  *)
+  (** Combined class A combined class is an integer of 0 -- 255, showing how
+      this character interacts to other combined characters. *)
   val combined_class : UChar.t -> int
 
   (** Decomposition *)
@@ -285,18 +282,16 @@ module type Type = sig
     [ `Canonform  (** Already in the canonical form *)
     | `HangulSyllable  (** Hangul is treated algotighmically.*)
     | `Composite of decomposition_type * UChar.t list
-      (** [`Composite (dtype, text)] means the given character is decomposed into
-          text by dtype decomposition. *)
-    ]
+      (** [`Composite (dtype, text)] means the given character is decomposed
+          into text by dtype decomposition. *) ]
 
   val load_decomposition_tbl : unit -> decomposition_info UCharTbl.t
 
   (** Canonical Composition *)
 
-  (** The return value [[(u_1, u'_1); ... (u_n, u'_1)]] means
-      for the given character [u], [u u_i] forms
-      the canonical composition [u'_i].
-      If u is a Hangul jamo, composition returns []. *)
+  (** The return value [[(u_1, u'_1); ... (u_n, u'_1)]] means for the given
+      character [u], [u u_i] forms the canonical composition [u'_i]. If u is a
+      Hangul jamo, composition returns []. *)
   val load_composition_tbl : unit -> (UChar.t * UChar.t) list UCharTbl.t
 
   (** Whether the given composed character is used in NFC or NFKC *)

@@ -32,8 +32,8 @@
 (* You can contact the authour by sending email to *)
 (* yoriyuki.y@gmail.com *)
 
-(** Sub-texts, parts of original (ur-) texts.
-    The signature and semantics matches those of UStorage. *)
+(** Sub-texts, parts of original (ur-) texts. The signature and semantics
+    matches those of UStorage. *)
 module type Type = sig
   type t
 
@@ -73,17 +73,15 @@ module type Type = sig
   (** The type of indexes of original texts. *)
   type ur_index
 
-  (** [refer t i j] returns the part of [t] from [i] until [j].
-      The character pointed by [j] is not included in the result.
-      If [j] is equal to [i] or located before [j], the result is
-      an empty string. *)
+  (** [refer t i j] returns the part of [t] from [i] until [j]. The character
+      pointed by [j] is not included in the result. If [j] is equal to [i] or
+      located before [j], the result is an empty string. *)
   val refer : ur_text -> ur_index -> ur_index -> t
 
   (** [excerpt t] copies the contents of [t] as a new ur_text. *)
   val excerpt : t -> ur_text
 
-  (** [context t] returns the tuple [(s, i, j)] such that
-      [t = refer s i j]. *)
+  (** [context t] returns the tuple [(s, i, j)] such that [t = refer s i j]. *)
   val context : t -> ur_text * ur_index * ur_index
 
   (** Conversion from indexes of sub-texts to ur_texts. *)

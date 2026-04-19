@@ -39,25 +39,21 @@
 (** How variables are handled *)
 type variable_option = [ `Blanked | `Non_ignorable | `Shifted | `Shift_Trimmed ]
 
-(** Strength of comparison.  For European languages, each strength
-    roughly means as
-    `Primary : Ignore accents and case
-    `Secondary : Ignore case but accents are counted in.
-    `Tertiary : Accents and case are counted in.
-    For the case of `Shifted, `Shift_Trimmed, there is the fourth strength.
-    `Quaternary : Variables such as - (hyphen) are counted in. *)
+(** Strength of comparison. For European languages, each strength roughly means
+    as `Primary : Ignore accents and case `Secondary : Ignore case but accents
+    are counted in. `Tertiary : Accents and case are counted in. For the case of
+    `Shifted, `Shift_Trimmed, there is the fourth strength. `Quaternary :
+    Variables such as - (hyphen) are counted in. *)
 type precision = [ `Primary | `Secondary | `Tertiary | `Quaternary ]
 
 module type Type = sig
   type text
   type index
 
-  (** For locale, see {!Locale}.
-      	      If [locale] is omitted, the standard UCA order is used.
-      	      If [prec] is omitted, the maximum possible strength is used.
-      	      If [variable] is omitted, the default of the locale
-      	      (usually [`Shifted]) is used.
-      	      The meaning of the returned value is similar to Stdlib.compare *)
+  (** For locale, see {!Locale}. If [locale] is omitted, the standard UCA order
+      is used. If [prec] is omitted, the maximum possible strength is used. If
+      [variable] is omitted, the default of the locale (usually [`Shifted]) is
+      used. The meaning of the returned value is similar to Stdlib.compare *)
   val compare :
     ?locale:string ->
     ?prec:precision ->
@@ -66,11 +62,10 @@ module type Type = sig
     text ->
     int
 
-  (** Binary comparison of sort_key gives the same result as [compare].
-      		  i.e.
-      		  [compare t1 t2 = Stdlib.compare (sort_key t1) (sort_key t2)]
-      		  If the same texts are repeatedly compared,
-      		  pre-computation of sort_key gives better performance. *)
+  (** Binary comparison of sort_key gives the same result as [compare]. i.e.
+      [compare t1 t2 = Stdlib.compare (sort_key t1) (sort_key t2)] If the same
+      texts are repeatedly compared, pre-computation of sort_key gives better
+      performance. *)
   val sort_key :
     ?locale:string ->
     ?prec:precision ->
