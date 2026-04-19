@@ -24,11 +24,11 @@
 (library
  (name camomileLib)
  (public_name camomile.lib)
- (libraries dune-site bigarray camlp-streams)
- (modules :standard \ camomile))
+ (libraries bigarray camlp-streams)
+ (modules :standard \ camomile configImpl sites))
 
 (library
  (name camomile)
  (public_name camomile)
- (libraries camomileLib)
- (modules camomile))
+ (libraries camomileLib dune-site)
+ (modules camomile configImpl sites))
